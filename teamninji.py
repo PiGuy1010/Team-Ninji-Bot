@@ -120,7 +120,8 @@ async def level(ctx, *id):
     else:
         name = ""
         for word in id:
-            name += word
+            name += word + " "
+        name = name[:-1]
         for i in range(2, len(values)):
             if values[i][1].lower() == name.lower():
                 row = values[i]
