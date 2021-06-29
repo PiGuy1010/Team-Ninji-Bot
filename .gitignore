@@ -1,3 +1,7 @@
+.gitignore
 credentials.json
 token.json
 token.txt
+.dockerignore
+Dockerfile
+quickstart.py
