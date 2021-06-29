@@ -123,7 +123,6 @@ async def level(ctx, *id):
             name += word + " "
         name = name[:-1]
         for i in range(2, len(values)):
-            print(values[i][1].lower())
             if values[i][1].lower() == name.lower():
                 row = values[i]
                 break
