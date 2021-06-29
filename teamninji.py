@@ -110,7 +110,38 @@ async def points(ctx, person=None):
 
 @bot.command(name='level')
 async def level(ctx, *id):
-    print(len(id))
+    sheet = service.spreadsheets()
+    result = sheet.values().get(spreadsheetId='1EEeck6LYRV31bpjvFLBkgz9ifOFpsHHq7tOfiFUQ7x0',
+                                range='Levels: Oldest to newest').execute()
+    values = result.get('values', [])
+    if len(id) == 1 and id.isnumeric():
+        row = values[int(id)+1]
+    else:
+        name = ""
+        for word in id:
+            name += word
+        for i in range(2, len(values)):
+            if values[i][1].lower() == name.lower():
+                row = values[i]
+
+    number = row[0]
+    levelname = row[1]
+    creator = row[2]
+    levelcode = row[4]
+    wrholder = row[6]
+    wr = row[7]
+    first = row[9]
+    second = row[10]
+    third = row[11]
+
+    message = f"""Created by: {creator}
+    WR: {wr} by {wrholder}
+    3 Point Challenge: {first}
+    10 Point Challenge: {second}
+    20 Point Challenge: {third}"""
+    embed = discord.Embed(title=f"Team Ninji Level #{number}: {levelname} ({levelcode})", description=message)
+    await ctx.send(embed=embed)
+
 
 async def clear(member, *roles):
     for role in roles:
