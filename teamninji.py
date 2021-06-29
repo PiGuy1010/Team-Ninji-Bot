@@ -114,7 +114,7 @@ async def level(ctx, *id):
     result = sheet.values().get(spreadsheetId='1EEeck6LYRV31bpjvFLBkgz9ifOFpsHHq7tOfiFUQ7x0',
                                 range='Levels: Oldest to newest').execute()
     values = result.get('values', [])
-    if len(id) == 1 and id.isnumeric():
+    if len(id) == 1 and id[0].isnumeric():
         row = values[int(id)+1]
     else:
         name = ""
