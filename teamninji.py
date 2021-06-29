@@ -115,7 +115,7 @@ async def level(ctx, *id):
                                 range='Levels: Oldest to newest').execute()
     values = result.get('values', [])
     if len(id) == 1 and id[0].isnumeric():
-        row = values[int(id)+1]
+        row = values[int(id[0])+1]
     else:
         name = ""
         for word in id:
