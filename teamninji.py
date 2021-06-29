@@ -65,8 +65,8 @@ async def points(ctx, person=None):
         person = ctx.author.display_name
     
     for row in values:
-        if row[1].lower() == person.lower():
-            await ctx.send(f'{row[1]} has {row[2]} total points for Team Ninji.')
+        if row[0].lower() == person.lower():
+            await ctx.send(f'{row[0]} has {row[1]} total points for Team Ninji.')
             break
     else:
         await ctx.send(f"Couldn't find a discord user in the spreadsheet named {person}.")
@@ -84,8 +84,8 @@ async def points(ctx, person=None):
     
     for row in values:
         for member in ctx.guild.members:
-            if row[1].lower() == member.display_name.lower():
-                points = int(row[2])
+            if row[0].lower() == member.display_name.lower():
+                points = int(row[1])
                 print(points)
                 await clear(member, *roles)
                 if points < beginnerPoints:
