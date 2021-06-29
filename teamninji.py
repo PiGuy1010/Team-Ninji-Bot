@@ -6,6 +6,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+import random
 
 with open('token.txt') as fin:
     TOKEN = fin.read()
@@ -114,6 +115,7 @@ async def level(ctx, *id):
     result = sheet.values().get(spreadsheetId='1EEeck6LYRV31bpjvFLBkgz9ifOFpsHHq7tOfiFUQ7x0',
                                 range='Levels: Oldest to newest').execute()
     values = result.get('values', [])
+
     row = None
     if len(id) == 1 and id[0].isnumeric():
         row = values[int(id[0])+1]
@@ -148,6 +150,32 @@ async def level(ctx, *id):
     embed = discord.Embed(title=f"Team Ninji Level #{number}: {levelname} ({levelcode})", description=message)
     await ctx.send(embed=embed)
 
+@bot.command(name='random')
+async def randomlevel(ctx):
+    sheet = service.spreadsheets()
+    result = sheet.values().get(spreadsheetId='1EEeck6LYRV31bpjvFLBkgz9ifOFpsHHq7tOfiFUQ7x0',
+                                range='Levels: Oldest to newest').execute()
+    values = result.get('values', [])
+
+    num = random.randint(1, len(values)-2)
+    row = values[num+1]
+
+    levelname = row[1]
+    creator = row[2]
+    levelcode = row[4]
+    wrholder = row[6]
+    wr = row[7]
+    first = row[9]
+    second = row[10]
+    third = row[11]
+
+    message = f"""Created by: {creator}
+    WR: {wr} by {wrholder}
+    3 Point Challenge: {first}
+    10 Point Challenge: {second}
+    20 Point Challenge: {third}"""
+    embed = discord.Embed(title=f"Team Ninji Level #{num}: {levelname} ({levelcode})", description=message)
+    await ctx.send(embed=embed)
 
 async def clear(member, *roles):
     for role in roles:
