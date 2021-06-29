@@ -12,7 +12,7 @@ with open('token.txt') as fin:
 
 intents = discord.Intents.default()
 intents.members = True
-bot = commands.Bot(command_prefix='!', intents=intents)
+bot = commands.Bot(command_prefix='!', intents=intents, help_command=None)
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
@@ -44,9 +44,11 @@ service = build('sheets', 'v4', credentials=creds)
 async def on_ready():
     print('working')
 
-@bot.command(name='test')
-async def test(ctx):
-    await ctx.send("Testing")
+@bot.command(name='help')
+async def help(ctx):
+    await ctx.send("""**!points <name>**: Returns the number of Team Ninji points that <name> has. Use the person's Discord display name in the Team Ninji server. If you don't enter a name, it will return your points.
+    **!level <number or name>**: Returns info about the Team Ninji level with the number or name you entered, including the code, current WR, and more.
+    **!random**: Returns a random Team Ninji level code if you just want to grind something, but you don't know what.""")
 
 @bot.command(name='potato')
 async def potato(ctx):
@@ -105,6 +107,10 @@ async def points(ctx, person=None):
                     print("Legend")
                     await member.add_roles(legend)
                     break
+
+@bot.command(name='level')
+async def level(ctx, *id):
+    print(len(id))
 
 async def clear(member, *roles):
     for role in roles:
