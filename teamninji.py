@@ -114,6 +114,7 @@ async def level(ctx, *id):
     result = sheet.values().get(spreadsheetId='1EEeck6LYRV31bpjvFLBkgz9ifOFpsHHq7tOfiFUQ7x0',
                                 range='Levels: Oldest to newest').execute()
     values = result.get('values', [])
+    row = None
     if len(id) == 1 and id[0].isnumeric():
         row = values[int(id[0])+1]
     else:
@@ -123,6 +124,9 @@ async def level(ctx, *id):
         for i in range(2, len(values)):
             if values[i][1].lower() == name.lower():
                 row = values[i]
+        else:
+            await ctx.send(f"Couldn't find a Team Ninji level named {name}.")
+            return
 
     number = row[0]
     levelname = row[1]
