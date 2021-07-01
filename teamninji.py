@@ -132,6 +132,10 @@ async def level(ctx, *id):
             await ctx.send(f"Couldn't find a Team Ninji level named {name}.")
             return
 
+    if len(row) < 12:
+        await ctx.send("Error: Incomplete level information.")
+        return
+
     number = row[0]
     levelname = row[1]
     creator = row[2]
