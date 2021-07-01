@@ -159,6 +159,9 @@ async def randomlevel(ctx):
 
     num = random.randint(1, len(values)-2)
     row = values[num+1]
+    while len(row) < 12: # Error trapping for if the row is incomplete
+        num = random.randint(1, len(values)-2)
+        row = values[num+1]
 
     levelname = row[1]
     creator = row[2]
